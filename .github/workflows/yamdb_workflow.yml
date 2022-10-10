@@ -82,5 +82,5 @@ jobs:
           to: ${{ secrets.TELEGRAM_TO }}
           token: ${{ secrets.TELEGRAM_TOKEN }}
           message: |
-            коммит в ${{ github.repository }} успешно прошел все тесты и задеплоен.
+            коммит в ${{ github.repository }} успешно прошел все тесты и задеплоен...
             Комментарий успешного комита: ${{ github.event.commits[0].message }}
