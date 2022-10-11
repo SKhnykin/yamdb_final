@@ -74,11 +74,11 @@ services:
     image: postgres:13.0-alpine
     
     volumes:
-      - /var/lib/postgresql/data/
+      - dbdata:/var/lib/postgresql/data/
     env_file:
       - ./.env
   web:
-    build: ../api_yamdb
+    image: staskhnykin/yamdb_api:latest
     restart: always
     volumes:
       - static_value:/app/static/
@@ -107,6 +107,7 @@ services:
 volumes:
   static_value:
   media_value:
+  dbdata:
 ```
 
 ## Описание команд для запуска приложения в контейнерах
@@ -123,3 +124,7 @@ docker-compose exec web python manage.py collectstatic --no-input
 # Для дампа данных из БД
 docker-compose exec web python manage.py dumpdata > dump.json
 ```
+# Примеры 
+/api/v1/users/me/ - Получить данные своей учетной записи
+/api/v1/categories/ - Получить список всех категорий
+/api/v1/genres/ - Получить список всех жанров.
