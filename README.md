@@ -124,7 +124,77 @@ docker-compose exec web python manage.py collectstatic --no-input
 # Для дампа данных из БД
 docker-compose exec web python manage.py dumpdata > dump.json
 ```
-# Примеры 
-/api/v1/users/me/ - Получить данные своей учетной записи
-/api/v1/categories/ - Получить список всех категорий
-/api/v1/genres/ - Получить список всех жанров.
+## Некоторые примеры запросов к API:
+Пример GET-запросов:
+Получение информации о категориях (без токена)
+
+`GET ...api/v1/categories/ `
+
+Ответ:
+```json
+{
+    "count": 3,
+    "next": null,
+    "previous": null,
+    "results": [
+        {
+            "name": "Automation",
+            "slug": "automation"
+        },
+        {
+            "name": "Music",
+            "slug": "music"
+        },
+        {
+            "name": "Films",
+            "slug": "films"
+        }
+    ]
+}
+```
+
+Пример POST-запроса:
+авторизованный пользователь `Stanislav` (с токином). 
+Добавление отзыва к произведению с `id=5`
+
+`POST .../api/v1/titles/5/reviews/`
+
+```json
+{
+  "text": "Сильное произведение",
+  "score": 5
+}
+```
+Ответ:
+```json
+{
+    "id": 7,
+    "text": "Сильное произведение",
+    "author": "Stanislav",
+    "score": 5,
+    "pub_date": "2022-10-11T21:03:16.355213Z"
+}
+```
+Пример GET-запроса:
+Получение списка отзывов к произведению с `id=9` (без токена).
+
+`GET .../api/v1/titles/9/reviews/`
+
+Ответ:
+```json
+{
+    "count": 1,
+    "next": null,
+    "previous": null,
+    "results": [
+        {
+            "id": 1,
+            "text": "Ну так себе, зря убил время",
+            "author": "admin",
+            "score": 2,
+            "pub_date": "2022-10-10T12:11:55.134311Z"
+        }
+    ]
+}
+```
+Более подробная документация доступна по ендпоинту: '.../redoc'
